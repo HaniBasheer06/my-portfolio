@@ -14,9 +14,11 @@ window.addEventListener("scroll", handleNavbar);
 handleNavbar();
 
 menuButton.addEventListener("click", () => {
-  menuButton.classList.toggle("open");
+  const isOpen = menuButton.classList.toggle("open");
   navLinks.classList.toggle("open");
   document.body.classList.toggle("menu-open");
+
+  menuButton.setAttribute("aria-expanded", String(isOpen));
 });
 
 navItems.forEach((item) => {
@@ -24,6 +26,7 @@ navItems.forEach((item) => {
     menuButton.classList.remove("open");
     navLinks.classList.remove("open");
     document.body.classList.remove("menu-open");
+    menuButton.setAttribute("aria-expanded", "false");
   });
 });
 
