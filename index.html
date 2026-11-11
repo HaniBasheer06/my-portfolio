@@ -128,64 +128,8 @@
         <h2>Selected work</h2>
       </div>
 
-      <div class="project-list">
-        <article class="project-card reveal">
-          <div class="project-number">01</div>
-
-          <div class="project-info">
-            <p class="project-type">Research concept</p>
-            <h3>AI Cybersecurity Monitor</h3>
-            <p>
-              A conceptual system for identifying suspicious activity and
-              helping organizations understand potential cyber threats.
-            </p>
-
-            <div class="tags">
-              <span>Python</span>
-              <span>AI/ML</span>
-              <span>Cybersecurity</span>
-            </div>
-
-            <a
-              href="https://github.com/HaniBasheer06/ai-security-monitor"
-              target="_blank"
-              class="project-link"
-            >
-              View project <span>↗</span>
-            </a>
-          </div>
-
-          <div class="project-image">
-            <img src="assets/project-security.jpg" alt="Cybersecurity project" />
-          </div>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="project-number">02</div>
-
-          <div class="project-info">
-            <p class="project-type">Academic project</p>
-            <h3>Power Distribution Analysis</h3>
-            <p>
-              An exploration of how intelligent systems can support monitoring,
-              reliability, and decision-making in power distribution networks.
-            </p>
-
-            <div class="tags">
-              <span>Java</span>
-              <span>Data Structures</span>
-              <span>Research</span>
-            </div>
-
-            <a href="#" class="project-link">
-              Case study <span>↗</span>
-            </a>
-          </div>
-
-          <div class="project-image project-placeholder">
-            <span>02 / 02</span>
-          </div>
-        </article>
+      <div class="project-list" id="project-list" aria-live="polite">
+        <p class="project-status">Loading projects...</p>
       </div>
     </section>
 
@@ -243,6 +187,35 @@
       <a href="mailto:haniedathodi120@gmail.com" class="email-link reveal">
         haniedathodi120@gmail.com <span>↗</span>
       </a>
+
+      <form class="contact-form reveal" id="contact-form">
+        <div class="contact-form-fields">
+          <label>
+            Name
+            <input name="name" type="text" maxlength="100" autocomplete="name" required />
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" maxlength="254" autocomplete="email" required />
+          </label>
+          <label class="contact-subject">
+            Subject
+            <input name="subject" type="text" maxlength="160" required />
+          </label>
+          <label class="contact-message">
+            Message
+            <textarea name="message" rows="5" maxlength="5000" required></textarea>
+          </label>
+          <label class="contact-trap" aria-hidden="true">
+            Website
+            <input name="website" type="text" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+        <div class="contact-form-footer">
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          <button class="contact-submit" type="submit">Send message <span>↗</span></button>
+        </div>
+      </form>
 
       <div class="contact-footer">
         <div>
