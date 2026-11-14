@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Hani Basheer K K — Developer Portfolio</title>
+  <desc id="description">AI, Machine Learning, and Cybersecurity portfolio preview.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101010"/>
+      <stop offset="1" stop-color="#181818"/>
+    </linearGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#f2f0eb" stroke-opacity=".035" stroke-width="1"/>
+    </pattern>
+    <style>
+      @font-face {
+        font-family: "Manrope";
+        font-style: normal;
+        font-weight: 500;
+        src: url("https://fonts.gstatic.com/s/manrope/v23/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk7PFO_F.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: "Manrope";
+        font-style: normal;
+        font-weight: 800;
+        src: url("https://fonts.gstatic.com/s/manrope/v23/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk59E-_F.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: "DM Mono";
+        font-style: normal;
+        font-weight: 400;
+        src: url("https://fonts.gstatic.com/s/dmmono/v16/aFTU7PB1QTsUX8KYhh0.ttf") format("truetype");
+      }
+      .sans { font-family: "Manrope", Arial, sans-serif; }
+      .mono { font-family: "DM Mono", monospace; }
+    </style>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="1050" cy="248" r="118" fill="none" stroke="#d8ff64" stroke-opacity=".13" stroke-width="1"/>
+  <circle cx="1050" cy="248" r="84" fill="none" stroke="#d8ff64" stroke-opacity=".1" stroke-width="1"/>
+  <path d="M998 248h104M1050 196v104" stroke="#d8ff64" stroke-opacity=".2" stroke-width="1"/>
+  <rect x="100" y="106" width="34" height="34" rx="17" fill="none" stroke="#d8ff64" stroke-width="1.5"/>
+  <text x="117" y="130" text-anchor="middle" fill="#d8ff64" font-size="19" font-weight="700" class="sans">H</text>
+  <text x="152" y="128" fill="#96938c" font-size="14" letter-spacing="2.2" class="mono">PORTFOLIO / 2026</text>
+  <text x="100" y="288" fill="#f2f0eb" font-size="76" font-weight="800" letter-spacing="-3.5" class="sans">Hani Basheer K K</text>
+  <rect x="102" y="326" width="72" height="4" rx="2" fill="#d8ff64"/>
+  <text x="100" y="390" fill="#d8ff64" font-size="27" font-weight="500" class="sans">AI · Machine Learning · Cybersecurity</text>
+  <path d="M100 494h1000" stroke="#f2f0eb" stroke-opacity=".18" stroke-width="1"/>
+  <text x="100" y="540" fill="#96938c" font-size="17" class="mono">hanibasheer06.github.io/my-portfolio/</text>
+  <text x="1100" y="540" text-anchor="end" fill="#d8ff64" font-size="17" class="mono">BENGALURU, INDIA</text>
+</svg>

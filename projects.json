@@ -1,0 +1,20 @@
+[
+  {
+    "title": "AI Cybersecurity Monitor",
+    "category": "Research concept",
+    "description": "A conceptual system for identifying suspicious activity and helping organizations understand potential cyber threats.",
+    "tags": ["Python", "AI/ML", "Cybersecurity"],
+    "link": "https://github.com/HaniBasheer06/ai-security-monitor",
+    "image": "assets/project-security.jpg",
+    "image_alt": "Cybersecurity project"
+  },
+  {
+    "title": "Power Distribution Analysis",
+    "category": "Academic project",
+    "description": "An exploration of how intelligent systems can support monitoring, reliability, and decision-making in power distribution networks.",
+    "tags": ["Java", "Data Structures", "Research"],
+    "link": "",
+    "image": "",
+    "image_alt": ""
+  }
+]

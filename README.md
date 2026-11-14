@@ -14,8 +14,10 @@ contact-form email.
 
 ## Run the Website
 
-The backend is required; opening `index.html` with Live Server or directly in a
-browser will not load projects or send contact messages.
+The Flask backend provides the database-backed project list and contact form.
+When the API is unavailable (for example, on a static host or VS Code Live
+Server), the Work section loads the shared `projects.json` catalog instead.
+The contact form still requires the Flask backend.
 
 1. Create and activate a virtual environment.
 2. Install dependencies with `pip install -r requirements.txt`.
@@ -23,9 +25,10 @@ browser will not load projects or send contact messages.
 4. Start the website with `python app.py`.
 5. Open `http://127.0.0.1:5000`.
 
-The project list is initialized in SQLite from the existing portfolio entries
-and loaded from `GET /api/projects`. The database is created automatically on
-the first run. Project data can be updated in the SQLite `projects` table.
+The project list is initialized in SQLite from `projects.json` and loaded from
+`GET /api/projects`. The database is created automatically on the first run.
+Project data can be updated in the SQLite `projects` table for the Flask site;
+update `projects.json` as well to keep the static-host fallback in sync.
 
 ## Email Configuration
 

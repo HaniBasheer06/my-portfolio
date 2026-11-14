@@ -241,6 +241,32 @@ button {
   margin-bottom: 42px;
 }
 
+.hero-roles {
+  min-height: 1.6em;
+  margin-bottom: 18px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: clamp(0.72rem, 3.2vw, 1.05rem);
+  white-space: nowrap;
+}
+
+.hero-role,
+.typing-cursor {
+  color: var(--accent);
+}
+
+.typing-cursor {
+  display: inline-block;
+  margin-left: 0.1em;
+  animation: typing-cursor-blink 0.8s steps(2, start) infinite;
+}
+
+@keyframes typing-cursor-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
 .status-dot {
   width: 7px;
   height: 7px;
@@ -664,6 +690,12 @@ button {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-cursor {
+    animation: none;
+  }
 }
 
 .cursor-dot,

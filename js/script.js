@@ -6,6 +6,42 @@ const navItems = document.querySelectorAll(".nav-links a");
 const cursorDot = document.querySelector(".cursor-dot");
 const cursorRing = document.querySelector(".cursor-ring");
 
+const heroArticle = document.querySelector(".hero-article");
+const heroRole = document.querySelector(".hero-role");
+const roles = [
+  "AI enthusiast",
+  "Java developer",
+  "Machine Learning learner",
+  "Cybersecurity explorer",
+];
+
+if (heroRole && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  let roleIndex = 0;
+  let characterIndex = 0;
+  let deleting = false;
+  heroRole.textContent = "";
+
+  function animateRole() {
+    const role = roles[roleIndex];
+    characterIndex += deleting ? -1 : 1;
+    heroRole.textContent = role.slice(0, characterIndex);
+
+    if (!deleting && characterIndex === role.length) {
+      deleting = true;
+      setTimeout(animateRole, 1500);
+    } else if (deleting && characterIndex === 0) {
+      deleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      heroArticle.textContent = roles[roleIndex].startsWith("AI") ? "an " : "a ";
+      setTimeout(animateRole, 300);
+    } else {
+      setTimeout(animateRole, deleting ? 40 : 80);
+    }
+  }
+
+  setTimeout(animateRole, 80);
+}
+
 function handleNavbar() {
   navbar.classList.toggle("scrolled", window.scrollY > 40);
 }
@@ -131,11 +167,22 @@ function createProjectCard(project, index, projectCount) {
   return card;
 }
 
-fetch("/api/projects")
-  .then((response) => {
-    if (!response.ok) throw new Error("Could not load projects.");
-    return response.json();
-  })
+async function loadProjects() {
+  try {
+    const response = await fetch("api/projects");
+    if (response.ok) return await response.json();
+  } catch (error) {
+    console.warn("Projects API is unavailable; loading the static catalog.", error);
+  }
+
+  const response = await fetch("projects.json");
+  if (!response.ok) {
+    throw new Error(`Could not load the static project catalog (${response.status}).`);
+  }
+  return response.json();
+}
+
+loadProjects()
   .then((projects) => {
     projectList.replaceChildren();
     if (projects.length === 0) {
@@ -153,12 +200,13 @@ fetch("/api/projects")
       revealObserver.observe(card);
     });
   })
-  .catch(() => {
+  .catch((error) => {
+    console.error("Could not load portfolio projects.", error);
     projectList.replaceChildren();
-    const error = document.createElement("p");
-    error.className = "project-status";
-    error.textContent = "Projects could not be loaded. Please try again later.";
-    projectList.append(error);
+    const errorMessage = document.createElement("p");
+    errorMessage.className = "project-status";
+    errorMessage.textContent = "Projects could not be loaded. Please try again later.";
+    projectList.append(errorMessage);
   });
 
 contactForm.addEventListener("submit", async (event) => {

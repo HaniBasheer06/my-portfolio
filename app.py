@@ -12,32 +12,7 @@ from flask import Flask, current_app, g, jsonify, request, send_from_directory
 
 
 BASE_DIR = Path(__file__).resolve().parent
-PROJECTS = (
-    {
-        "title": "AI Cybersecurity Monitor",
-        "category": "Research concept",
-        "description": (
-            "A conceptual system for identifying suspicious activity and "
-            "helping organizations understand potential cyber threats."
-        ),
-        "tags": ["Python", "AI/ML", "Cybersecurity"],
-        "link": "https://github.com/HaniBasheer06/ai-security-monitor",
-        "image": "assets/project-security.jpg",
-        "image_alt": "Cybersecurity project",
-    },
-    {
-        "title": "Power Distribution Analysis",
-        "category": "Academic project",
-        "description": (
-            "An exploration of how intelligent systems can support monitoring, "
-            "reliability, and decision-making in power distribution networks."
-        ),
-        "tags": ["Java", "Data Structures", "Research"],
-        "link": "",
-        "image": "",
-        "image_alt": "",
-    },
-)
+PROJECTS = json.loads((BASE_DIR / "projects.json").read_text(encoding="utf-8"))
 
 
 class MailConfigurationError(Exception):
@@ -231,7 +206,11 @@ def create_app(test_config=None):
 
     @app.get("/<path:asset_path>")
     def static_assets(asset_path):
-        if Path(asset_path).parts[0] not in {"assets", "css", "js"}:
+        if asset_path != "projects.json" and Path(asset_path).parts[0] not in {
+            "assets",
+            "css",
+            "js",
+        }:
             return jsonify(error="Not found."), 404
         return send_from_directory(BASE_DIR, asset_path)
 

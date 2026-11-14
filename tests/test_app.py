@@ -1,3 +1,4 @@
+import struct
 import tempfile
 import unittest
 from pathlib import Path
@@ -35,12 +36,23 @@ class PortfolioAppTests(unittest.TestCase):
     def test_homepage_and_assets_are_served(self):
         page = self.client.get("/")
         script = self.client.get("/js/script.js")
+        projects = self.client.get("/projects.json")
+        image = self.client.get("/assets/og-image.png")
 
         self.assertEqual(page.status_code, 200)
         self.assertIn(b'id="contact-form"', page.data)
+        self.assertIn(b'property="og:image"', page.data)
+        self.assertIn(b'https://hanibasheer06.github.io/my-portfolio/assets/og-image.png', page.data)
         self.assertEqual(script.status_code, 200)
+        self.assertEqual(projects.status_code, 200)
+        self.assertEqual(len(projects.get_json()), 2)
+        self.assertEqual(image.status_code, 200)
+        self.assertEqual(image.mimetype, "image/png")
+        self.assertEqual(struct.unpack(">II", image.data[16:24]), (1200, 630))
         page.close()
         script.close()
+        projects.close()
+        image.close()
 
     def test_contact_rejects_invalid_email(self):
         response = self.client.post(
