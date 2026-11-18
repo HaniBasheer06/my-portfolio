@@ -8,10 +8,12 @@ from contextlib import closing
 from email.message import EmailMessage
 from pathlib import Path
 
+from dotenv import load_dotenv
 from flask import Flask, current_app, g, jsonify, request, send_from_directory
 
 
 BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env")
 PROJECTS = json.loads((BASE_DIR / "projects.json").read_text(encoding="utf-8"))
 
 
