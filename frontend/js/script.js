@@ -215,17 +215,21 @@ contactForm.addEventListener("submit", async (event) => {
   submitButton.disabled = true;
   formStatus.textContent = "Sending your message...";
 
+  const formData = new FormData(contactForm);
+  formData.append("access_key", "9ba6ce78-973e-4621-8361-394a5a60520e");
+
   try {
-    const response = await fetch("https://hanibasheer06.pythonanywhere.com/api/contact",{ 
+    const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(Object.fromEntries(new FormData(contactForm))),
+      body: formData,
     });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.error || "Your message could not be sent.");
-
-    contactForm.reset();
-    formStatus.textContent = result.message;
+    if (result.success) {
+      contactForm.reset();
+      formStatus.textContent = "Thanks — your message has been sent!";
+    } else {
+      throw new Error(result.message || "Your message could not be sent.");
+    }
   } catch (error) {
     formStatus.textContent =
       error.message || "Your message could not be sent. Please try again.";
