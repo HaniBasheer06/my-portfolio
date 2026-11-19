@@ -124,7 +124,9 @@ def create_app(test_config=None):
         app,
         resources={
             r"/api/*": {
-                "origins": ["https://haanibasheerporfolio.vercel.app"]
+                "origins": [
+                    "https://haanibasheerporfolio.vercel.app"
+                ]
             }
         }
     )
