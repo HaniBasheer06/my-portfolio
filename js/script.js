@@ -216,7 +216,7 @@ contactForm.addEventListener("submit", async (event) => {
   formStatus.textContent = "Sending your message...";
 
   try {
-    const response = await fetch("/api/contact", {
+    const response = await fetch("https://hanibasheer06.pythonanywhere.com/api/contact",{ 
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Object.fromEntries(new FormData(contactForm))),
