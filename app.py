@@ -116,18 +116,21 @@ def send_contact_email(app, name, email, subject, message):
         client.send_message(email_message)
 
 
+
 def create_app(test_config=None):
     app = Flask(__name__)
-   CORS(
-    app,
-    resources={
-        r"/api/*": {
-            "origins": [
-                "https://haanibasheerporfolio.vercel.app"
-            ]
+
+    CORS(
+        app,
+        resources={
+            r"/api/*": {
+                "origins": [
+                    "https://haanibasheerporfolio.vercel.app"
+                ]
+            }
         }
-    }
-)
+    )
+
     app.config.from_mapping(
         DATABASE_PATH=os.environ.get(
             "PORTFOLIO_DATABASE", str(BASE_DIR / "instance" / "portfolio.db")
