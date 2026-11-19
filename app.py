@@ -4,6 +4,8 @@ import re
 import smtplib
 import ssl
 import sqlite3
+import urllib.request
+import urllib.error
 from contextlib import closing
 from email.message import EmailMessage
 from pathlib import Path
@@ -74,7 +76,43 @@ def initialize_database(database_path):
             )
 
 
+def send_brevo_api_email(app, name, email, subject, message):
+    api_key = app.config["BREVO_API_KEY"]
+    sender = app.config["MAIL_FROM"]
+    recipient = app.config["MAIL_TO"]
+
+    if not api_key or not sender or not recipient:
+        raise MailConfigurationError("BREVO_API_KEY, MAIL_FROM, and MAIL_TO are required.")
+
+    payload = {
+        "sender": {"name": "Portfolio Contact Form", "email": sender},
+        "to": [{"email": recipient}],
+        "replyTo": {"email": email, "name": name},
+        "subject": f"Portfolio contact: {subject}",
+        "textContent": f"Name: {name}\nEmail: {email}\nSubject: {subject}\n\nMessage:\n{message}",
+    }
+
+    req = urllib.request.Request(
+        "https://api.brevo.com/v3/smtp/email",
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "accept": "application/json",
+            "api-key": api_key,
+            "content-type": "application/json",
+        },
+        method="POST",
+    )
+
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        if resp.status not in {200, 201, 202}:
+            raise MailConfigurationError(f"Brevo API error status: {resp.status}")
+
+
 def send_contact_email(app, name, email, subject, message):
+    if app.config.get("BREVO_API_KEY"):
+        send_brevo_api_email(app, name, email, subject, message)
+        return
+
     host = app.config["SMTP_HOST"]
     sender = app.config["MAIL_FROM"]
     recipient = app.config["MAIL_TO"]
@@ -125,18 +163,20 @@ def create_app(test_config=None):
         resources={
             r"/api/*": {
                 "origins": [
-                    "https://haanibasheerporfolio.vercel.app"
+                    "https://haanibasheerporfolio.vercel.app",
+                    "https://*.vercel.app",
+                    "http://localhost:5500",
+                    "http://127.0.0.1:5500",
                 ]
             }
         }
     )
 
-    return app
-
     app.config.from_mapping(
         DATABASE_PATH=os.environ.get(
             "PORTFOLIO_DATABASE", str(BASE_DIR / "instance" / "portfolio.db")
         ),
+        BREVO_API_KEY=os.environ.get("BREVO_API_KEY", ""),
         SMTP_HOST=os.environ.get("SMTP_HOST", ""),
         SMTP_PORT=int(os.environ.get("SMTP_PORT", "587")),
         SMTP_SECURITY=os.environ.get("SMTP_SECURITY", "starttls").lower(),
@@ -211,7 +251,7 @@ def create_app(test_config=None):
                 fields["subject"],
                 fields["message"],
             )
-        except (MailConfigurationError, OSError, smtplib.SMTPException):
+        except (MailConfigurationError, OSError, smtplib.SMTPException, urllib.error.URLError):
             current_app.logger.exception("Could not send portfolio contact email.")
             return (
                 jsonify(

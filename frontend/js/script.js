@@ -169,7 +169,7 @@ function createProjectCard(project, index, projectCount) {
 
 async function loadProjects() {
   try {
-    fetch("https://hanibasheer06.pythonanywhere.com/api/projects")
+    const response = await fetch("https://hanibasheer06.pythonanywhere.com/api/projects");
     if (response.ok) return await response.json();
   } catch (error) {
     console.warn("Projects API is unavailable; loading the static catalog.", error);
