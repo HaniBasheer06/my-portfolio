@@ -124,12 +124,12 @@ def create_app(test_config=None):
         app,
         resources={
             r"/api/*": {
-                "origins": [
-                    "https://haanibasheerporfolio.vercel.app"
-                ]
+                "origins": ["https://haanibasheerporfolio.vercel.app"]
             }
         }
     )
+
+    return app
 
     app.config.from_mapping(
         DATABASE_PATH=os.environ.get(
