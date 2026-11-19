@@ -7,6 +7,7 @@ import sqlite3
 from contextlib import closing
 from email.message import EmailMessage
 from pathlib import Path
+from flask_cors import CORS
 
 from dotenv import load_dotenv
 from flask import Flask, current_app, g, jsonify, request, send_from_directory
@@ -117,6 +118,16 @@ def send_contact_email(app, name, email, subject, message):
 
 def create_app(test_config=None):
     app = Flask(__name__)
+   CORS(
+    app,
+    resources={
+        r"/api/*": {
+            "origins": [
+                "https://haanibasheerporfolio.vercel.app"
+            ]
+        }
+    }
+)
     app.config.from_mapping(
         DATABASE_PATH=os.environ.get(
             "PORTFOLIO_DATABASE", str(BASE_DIR / "instance" / "portfolio.db")
